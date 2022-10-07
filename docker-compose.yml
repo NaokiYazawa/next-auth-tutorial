@@ -1,0 +1,25 @@
+# docker-composeで使用するバージョンを定義しています。2022年10月時点では、3.9が最新です。
+version: "3.9"
+# サービス (コンテナ) を定義します。
+services:
+  # 今回は postgres をサービスとして定義しました。
+  postgres:
+    # Docker Image は postgres:12-alpine を使います。postgres:12-alpine は postgres:12 と比較して、イメージサイズが小さくなっています。
+    image: postgres:12-alpine
+    # コンテナの名前を指定します。
+    container_name: postgres
+    # 環境変数を設定します。
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=mydb
+    # データの永続化
+    volumes:
+      # postgresディレクトリを/var/lib/postgresql/dataにマウントする
+      - postgres:/var/lib/postgresql/data
+    # ポートの指定（HOST:CONTAINER）
+    ports:
+      - 5432:5432
+# データの永続化
+volumes:
+  postgres:
